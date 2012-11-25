@@ -6,11 +6,7 @@ $app = new Silex\Application();
 
 $app['debug'] = true;
 
-$app->get('/', function() {
-    return '';
-});
-
-$app->get('/decrypter/hash/', function(Silex\Application $app, Request $request) {
+$app->get('/', function(Silex\Application $app, Request $request) {
     $decryptors = array('Web\Noisette','Web\Myaddr','Web\Decrypt','Web\Md5decrypter','Web\Google', 'Web\Gromweb');
 
     $result = array();
