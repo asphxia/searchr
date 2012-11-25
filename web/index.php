@@ -11,9 +11,9 @@ $app->get('/', function(Silex\Application $app, Request $request) {
 
     $result = array();
     $result['hash'] = $request->get('hash');
-    foreach($decryptors as $decrytor)
+    foreach($decryptors as $decryptor)
     {
-        if (NULL !== ($plain = Asphxia\Md5Decryptor\Md5Decryptor::plain($hash, $decrytor))) {
+        if (NULL !== ($plain = Asphxia\Md5Decryptor\Md5Decryptor::plain($result['hash'], $decryptor))) {
             $result['plain'] = $plain;
             $result['decryptor'] = $decryptor;
             break;
