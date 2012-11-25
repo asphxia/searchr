@@ -19,6 +19,17 @@
         <include name=".htaccess" />
     </fileset>
 
+    <fileset id="app-export" dir="${project.base}">
+        <include name="web/*" />
+        <include name=".htaccess" />
+        <include name="vendor/autoload.php" />
+        <include name="vendor/asphxia/md5decryptor/src/Asphxia/Md5Decryptor/*" />
+        <include name="vendor/composer/*" />
+        <include name="vendor/pimple/pimple/lib/*" />
+        <include name="vendor/silex/silex/src/Silex/*" />
+        <include name="vendor/succinct/coil/src/*" />
+        <include name="vendor/symfony/*" />
+    </fileset>
     
     <!-- app core files: bare application -->
     <!-- core-src + web-src + configuration -->
@@ -91,9 +102,9 @@
     <!-- task: dist -->
     <target name="dist">
         <mkdir dir="${project.build}" />
-        <tar destfile="${project.build}/${project.distfilename}" compression="gzip">
-            <fileset refid="skeleton-src" />
-        </tar>
+        <zip destfile="${project.build}/${project.distfilename}">
+            <fileset refid="app-export" />
+        </zip>
     </target>
     
     <!-- remove old files -->
