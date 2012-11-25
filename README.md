@@ -1,6 +1,6 @@
 HashSearchr
 =================================
-HashSearchr is a simple tool that uses [Md5Decrypter] library to search for MD5 hash using a series of online web-based services, such as Google, Md5Decrypter.co.uk and so on.
+HashSearchr is a simple tool that uses [Md5Decryptor](https://github.com/asphxia/md5decryptor) library to search for MD5 hash using a series of online web-based services, such as Google, Md5Decrypter.co.uk and so on.
 
 Contributing
 ============
