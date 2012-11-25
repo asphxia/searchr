@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Md5Decryper" default="help" description="" basedir=".">
+    <property file="configuration" />
+    <property file="private" />
+    
+    <tstamp>
+        <format property="buildtime" pattern="%a, %d %b %Y, %H:%M"/>
+    </tstamp>
+    <target name="help">
+        <echo msg="Tasks: " />
+        <echo msg="   code-sniff: makes a code-sniff on core-src" />
+        <echo msg="   deploy: copies core-src, web-src, skeleton-src, etc to `${export.dir}`" />
+        <echo msg="   dist: builds `${project.distfilename}` of core-src" />
+    </target>
+    
+    <!-- public files -->
+    <fileset id="web-src" dir="${project.base}">
+        <include name="web/index.php" />
+        <include name=".htaccess" />
+    </fileset>
+
+    
+    <!-- app core files: bare application -->
+    <!-- core-src + web-src + configuration -->
+    <fileset id="skeleton-src" dir="${project.base}">
+        <!-- bare bootstrap app -->
+        <include name=".htaccess" />
+        <include name="web/index.php" />
+        <include name="vendor/**" />
+    </fileset>
+    
+    <fileset id="vendor" dir="${project.base}">
+        <include name="vendor/**" />
+    </fileset>
+    
+    <fileset id="exclude-list" dir="${project.base}">
+        <exclude name="**" />
+        <exclude name="configuration" />
+        <exclude name="build.xml" />
+        <exclude name="docs/**" />
+        <exclude name="**/*~" />
+        <exclude name="**/*.sql" />
+        <exclude name="**/*.psd" />
+        <exclude name="**/*.xml" />
+        <exclude name="**/*.bak" />
+        <exclude name="**/*.md" />
+        <exclude name="**/*.json" />
+        <exclude name="**/*.lock" />
+        <exclude name="**/*.phar" />
+        <exclude name="**/*.yml" />
+        <exclude name="**/*.sh" />
+    </fileset>
+                
+    <!-- task: code-sniff -->
+    <target name="code-sniff">
+        <phpcodesniffer standard="Zend" showSniffs="true" showWarnings="true">
+            <fileset refid="web-src" />
+        </phpcodesniffer>
+    </target>
+
+    <!-- task: deploy to production -->
+    <!-- http://codeinthehole.com/writing/deploying-to-a-shared-hosting-environment-using-phing/ -->
+    <target name="deploy-prod">
+        <echo message="Copying fileset '${skelleton-src}' to ${ftp.host} in ${ftp.mode} mode" />
+        <ftpdeploy
+            host="${ftp.host}"
+            port="${ftp.port}"
+            username="${ftp.username}"
+            password="${ftp.password}"
+            dir="${ftp.dir}"
+            mode="${ftp.mode}">
+            <fileset refid="skeleton-src" />
+        </ftpdeploy>
+    </target>
+    
+    <!-- task: deploy -->
+    <target name="deploy">
+        <copy todir="${export.dir}">
+            <!-- expand all properties -->
+            <filterchain>
+                <expandproperties />
+            </filterchain>
+            
+            <!-- copy all files -->
+            <fileset refid="skeleton-src" />
+            <!-- ignore sensitive files -->
+            <fileset refid="exclude-list" />
+        </copy>
+    </target>
+    
+    <!-- task: dist -->
+    <target name="dist">
+        <mkdir dir="${project.build}" />
+        <tar destfile="${project.build}/${project.distfilename}" compression="gzip">
+            <fileset refid="skeleton-src" />
+        </tar>
+    </target>
+    
+    <!-- remove old files -->
+    <target name="clean-up">
+        <delete>
+            <fileset dir="${project.base}">
+                <include name="index.php~" />
+            </fileset>
+        </delete>
+    </target>
+
+</project>

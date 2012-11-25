@@ -1,0 +1,7 @@
+project.base=.
+project.build=${project.base}/build
+project.distfilename=md5decrypter.tar.gz
+export.dir=/var/www/decrypter
+author=Asphyxia
+legal.notice=Copyleft 2012 ${author}
+license=

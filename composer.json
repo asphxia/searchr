@@ -1,0 +1,19 @@
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "http://github.com/asphxia/coil"
+        },{
+            "type": "vcs",
+            "url": "http://github.com/asphxia/md5decryptor"
+        }
+    ],
+
+    "minimum-stability": "dev",
+    "require": {
+        "silex/silex": "1.0.*",
+        "Succinct/Coil": "master",
+        "Asphxia/Md5Decryptor": "master",
+        "phing/phing": "dev-master"
+    }
+}
