@@ -1,7 +1,7 @@
 project.base=.
 project.build=${project.base}/build
 project.distfilename=md5decrypter.zip
-export.dir=/var/www/decrypter
+export.dir=/var/www/virtual/decryptor
 author=Asphyxia
 legal.notice=Copyleft 2012 ${author}
 license=
